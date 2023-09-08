@@ -1,0 +1,81 @@
+//LAB PROGRAM 6 Dijkstra
+import java.util.*;
+public class Dijkstra {
+    static int d[] = new int[10],u, i, j;
+
+    public void djikstr(int[][] a, int s, int n) {
+        int  min;
+        int visited[] = new int[10];
+        for (i = 0; i < n; i++) {
+            visited[i] = 0;
+            d[i] = a[s][i];
+        }
+        d[s] = 0;
+        visited[s] = 1;
+        for (i = 0; i < n; i++) {
+            if (i == s) {
+                continue;
+            }
+            min = 99;
+            for (j = 0; j <n; j++) {
+                if (d[j] < min && visited[j] == 0) {
+                    min = d[j];
+                    u = j;
+                }
+            }
+
+            visited[u] = 1;
+            for (j = 0; j < n; j++) {
+                if (visited[j] == 0) {
+                    if (d[j] > d[u] + a[u][j]) {
+                        d[j] = d[u] + a[u][j];
+                    }
+                    // p[v] = u;
+                }
+            }
+
+        }
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the number of vertices");
+        int n = sc.nextInt();
+        System.out.println("Enter the weighted matrix");
+        int a[][] = new int[10][10];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                a[i][j] = sc.nextInt();
+            }
+        }
+        System.out.println("Enter the source vertex");
+        int s = sc.nextInt();
+        Dijkstra dr = new Dijkstra();
+        dr.djikstr(a, s, n);
+        System.out.println("Shortest path from " + s + " to all other vertices");
+        for (int i = 0; i < n; i++) {
+            System.out.println("TO " + i + "is" + d[i]);
+        }
+
+    }
+
+}
+
+//OUTPUT
+
+
+Enter the number of vertices
+5
+Enter the weighted matrix
+0 3 99 7 99
+3 0 4 2 99
+99 4 0 5 6
+7 2 5 0 4
+99 99 6 4 0
+Enter the source vertex
+0
+Shortest path from 0 to all other vertices
+TO 0is0
+TO 1is3
+TO 2is7
+TO 3is5
+TO 4is9

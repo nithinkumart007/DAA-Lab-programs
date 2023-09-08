@@ -1,0 +1,80 @@
+//LAB PROGRAM 7 Kruskal
+import java.util.*;
+public class Kruskal {
+    int parent[]=new int[10];
+    int find(int m){
+        int p=m;
+        while(parent[p]!=0)
+            p=parent[p];
+        return p;
+    }
+    void union(int i,int j){
+        if(i<j)
+            parent[i]=j;
+        else
+            parent[j]=i;
+    }
+    void krkl(int [][]a,int n){
+        int u=0,v=0,k=0,sum=0,min,i,j;
+        while(k<n-1)
+        {
+            min=99;
+            for(i=1;i<=n;i++)
+            {
+                for(j=1;j<=n;j++)
+                {
+                    if(a[i][j]<min && i!=j)
+                    {
+                        min=a[i][j];
+                        u=i;
+                        v=j;
+                        
+                    }
+               
+                }
+            }
+            i=find(u);
+            j=find(v);
+            if(i!=j){
+                union(i,j);
+                System.out.println("("+u+"->"+v+"="+a[u][v]);
+                sum=sum+a[u][v];
+                k++;
+            }
+            a[u][v]=a[v][u]=99;
+        }
+        System.out.println("the  cost of mst is"+sum);
+    }
+    public static void main(String[] args) {
+        int a[][]=new int[10][10];
+        int i,j;
+        System.out.println("enter the no of vertices");
+        Scanner in=new Scanner(System.in);
+        int n;
+        n=in.nextInt();
+        System.out.println("enter the weighted mastrix");
+        for(i=1;i<=n;i++)
+            for(j=1;j<=n;j++)
+                a[i][j]=in.nextInt();
+        Kruskal k=new Kruskal();
+        k.krkl(a,n);
+        in.close();
+    }
+
+}
+
+//OUTPUT
+
+enter the no of vertices
+5
+enter the weighted mastrix
+0 2 4 2 8
+2 0 2 6 6
+4 2 0 9 6
+2 6 9 0 2
+8 6 6 2 0
+(1->2=2
+(1->4=2
+(2->3=2
+(4->5=2
+the  cost of mst is8
